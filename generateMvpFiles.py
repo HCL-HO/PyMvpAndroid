@@ -51,32 +51,34 @@ if not os.path.exists(newPackagePath):
 
 
 def make_main_class():
+    claaType = ''
+    if PageType is FRAGMENT:
+        claaType = BaseFragmentName
+    else:
+        classType = BaseActivityName
+
     file = open(newPackagePath + main_class_name + '.java', 'x')
     file.write(
-        'public class ' + main_class_name + ' extends MvpBaseFragment implements ' + mvp_view_class_name + ' {}')
+        'public class ' + main_class_name + ' extends ' + classType + ' implements ' + mvp_view_class_name + ' {}')
 
+    def make_mvp_presenter_class():
+        file = open(newPackagePath + mvp_presenter_class_name + '.java', 'x')
+        file.write(
+            'public interface ' + mvp_presenter_class_name + ' <V extends ' + mvp_view_class_name + '> extends '
+            + MvpPresenterName + '<V> {}')
 
-def make_mvp_presenter_class():
-    file = open(newPackagePath + mvp_presenter_class_name + '.java', 'x')
-    file.write(
-        'public interface ' + mvp_presenter_class_name + ' <V extends ' + mvp_view_class_name + '> extends '
-        + MvpPresenterName + '<V> {}')
+    def make_mvp_view_class():
+        file = open(newPackagePath + mvp_view_class_name + '.java', 'x')
+        file.write(
+            'public interface ' + mvp_view_class_name + ' extends ' + BaseMvpViewName + ' {}')
 
+    def make_presenter_class():
+        file = open(newPackagePath + presenter_class_name + '.java', 'x')
+        file.write('public class ' + presenter_class_name +
+                   '<V extends ' + mvp_view_class_name + '> extends ' + BasePresenterName
+                   + '<V> implements ' + mvp_presenter_class_name + '<V> {}')
 
-def make_mvp_view_class():
-    file = open(newPackagePath + mvp_view_class_name + '.java', 'x')
-    file.write(
-        'public interface ' + mvp_view_class_name + ' extends ' + BaseMvpViewName + ' {}')
-
-
-def make_presenter_class():
-    file = open(newPackagePath + presenter_class_name + '.java', 'x')
-    file.write('public class ' + presenter_class_name +
-               '<V extends ' + mvp_view_class_name + '> extends ' + BasePresenterName
-               + '<V> implements ' + mvp_presenter_class_name + '<V> {}')
-
-
-make_main_class()
-make_mvp_presenter_class()
-make_mvp_view_class()
-make_presenter_class()
+    make_main_class()
+    make_mvp_presenter_class()
+    make_mvp_view_class()
+    make_presenter_class()
