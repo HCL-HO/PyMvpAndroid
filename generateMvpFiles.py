@@ -60,7 +60,7 @@ def make_mvp_presenter_class():
     file = open(newPackagePath + mvp_presenter_class_name + '.java', 'x')
     file.write(
         'public interface ' + mvp_presenter_class_name + ' <V extends ' + mvp_view_class_name + '> extends '
-        + BasePresenterName + '<V> {}')
+        + MvpPresenterName + '<V> {}')
 
 
 def make_mvp_view_class():
