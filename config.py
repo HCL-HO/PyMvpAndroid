@@ -1,3 +1,4 @@
+# projectDir = '/Users/ericho/workspace/JX_App_Android 1.0.5/app/src/main/java/com/hec/app/'
 projectDir = '/Users/ericho/workspace/JX_App_Android/app/src/main/java/com/hec/app/'
 # projectDir = ''
 # subPackage = 'mvp/'

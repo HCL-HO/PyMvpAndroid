@@ -43,11 +43,11 @@ def get_new_package_path():
 
 def get_new_package_name():
     split = projectDir.split('/java/')
-    print(split)
     package = split[1].replace('/', '.')
-    print(package)
+    subpackage_copy = subPackage
+    subpackage_copy = subpackage_copy.replace('/', '.')
     if subPackage is not '':
-        return package + subPackage
+        return package + subpackage_copy + "." + className.lower()
     else:
         return package[-1:]
 
@@ -67,9 +67,9 @@ if not os.path.exists(newPackagePath):
 
 
 def make_main_class():
-    claaType = ''
+    classType = ''
     if PageType is FRAGMENT:
-        claaType = BaseFragmentName
+        classType = BaseFragmentName
     else:
         classType = BaseActivityName
 
@@ -78,28 +78,32 @@ def make_main_class():
         get_package_sentence() +
         'public class ' + main_class_name + ' extends ' + classType + ' implements ' + mvp_view_class_name + ' {}')
 
-    def make_mvp_presenter_class():
-        file = open(newPackagePath + mvp_presenter_class_name + '.java', 'x')
-        file.write(
-            get_package_sentence() +
-            'public interface ' + mvp_presenter_class_name + ' <V extends ' + mvp_view_class_name + '> extends '
-            + MvpPresenterName + '<V> {}')
 
-    def make_mvp_view_class():
-        file = open(newPackagePath + mvp_view_class_name + '.java', 'x')
-        file.write(
-            get_package_sentence() +
-            'public interface ' + mvp_view_class_name + ' extends ' + BaseMvpViewName + ' {}')
+def make_mvp_presenter_class():
+    file = open(newPackagePath + mvp_presenter_class_name + '.java', 'x')
+    file.write(
+        get_package_sentence() +
+        'public interface ' + mvp_presenter_class_name + ' <V extends ' + BaseMvpViewName + '> extends '
+        + MvpPresenterName + '<V> {}')
 
-    def make_presenter_class():
-        file = open(newPackagePath + presenter_class_name + '.java', 'x')
-        file.write(
-            get_package_sentence() +
-            'public class ' + presenter_class_name +
-            '<V extends ' + mvp_view_class_name + '> extends ' + BasePresenterName
-            + '<V> implements ' + mvp_presenter_class_name + '<V> {}')
 
-    make_main_class()
-    make_mvp_presenter_class()
-    make_mvp_view_class()
-    make_presenter_class()
+def make_mvp_view_class():
+    file = open(newPackagePath + mvp_view_class_name + '.java', 'x')
+    file.write(
+        get_package_sentence() +
+        'public interface ' + mvp_view_class_name + ' extends ' + BaseMvpViewName + ' {}')
+
+
+def make_presenter_class():
+    file = open(newPackagePath + presenter_class_name + '.java', 'x')
+    file.write(
+        get_package_sentence() +
+        'public class ' + presenter_class_name +
+        '<V extends ' + mvp_view_class_name + '> extends ' + BasePresenterName
+        + '<V> implements ' + mvp_presenter_class_name + '<V> {}')
+
+
+make_main_class()
+make_mvp_presenter_class()
+make_mvp_view_class()
+make_presenter_class()
